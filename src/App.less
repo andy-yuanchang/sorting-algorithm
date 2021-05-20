@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:400,700");
+
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+#app {
+    font-family: Inconsolata, monospace;
+    margin: 1rem;
+
+    #options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .checkbox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .array-size {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .render-speed {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+}
+
+@import './Button.less';
+@import './Histogram.less';

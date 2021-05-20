@@ -1,0 +1,47 @@
+{
+  "name": "sorting-algorithm",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "firebase": "^8.6.1",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-firebase-hooks": "^3.0.4"
+  },
+  "scripts": {
+    "serve": "webpack serve --config webpack.config.js --progress",
+    "build": "webpack --mode production",
+    "firebase-login": "~/AppData/Roaming/npm-global/firebase login",
+    "firebase-init": "~/AppData/Roaming/npm-global/firebase init",
+    "firebase-deploy": "~/AppData/Roaming/npm-global/firebase deploy"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.4",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "less": "^4.1.1",
+    "less-loader": "^8.1.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
