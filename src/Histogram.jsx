@@ -17,13 +17,16 @@ const Histogram = (props) => {
           let color;
           switch (v.status) {
             case 'incomplete':
-              color = 'rgb(115, 182, 115)';
+              color = 'rgb(255, 125, 125)';
               break;
             case 'swap':
               color = 'rgb(115, 125, 255)';
               break;
             case 'complete':
-              color = 'rgb(255, 125, 125)';
+              color = 'rgb(115, 182, 115)';
+              break;
+            case 'compare':
+              color = 'rgb(255, 125, 255)';
               break;
           }
           return (

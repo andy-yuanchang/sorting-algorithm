@@ -14,7 +14,7 @@ const SORT_ALGORITHM_LIST = {
   Heap: 'Heap',
 };
 
-const MAX_SPEED = 50;
+const MAX_SPEED = 200;
 
 const App = () => {
   const [number, setNumber] = useState(10);
