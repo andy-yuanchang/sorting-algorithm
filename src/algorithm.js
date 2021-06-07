@@ -87,21 +87,18 @@ const insertionSort = (array) => {
   const renderQueue = [];
   for (let i = 0; i < arr.length; i++) {
     const orderedIndex = i;
-    for (let j = orderedIndex; j >= 0; j--) {
-      renderQueue.push(markCompare(arr, i));
-      if (arr[j].value < arr[minIndex].value) {
-        markIncomplete(arr, minIndex);
-        minIndex = j;
-      }
-      renderQueue.push(markCompare(arr, minIndex));
-    }
 
-    if (i !== minIndex) {
-      swapArr(arr, minIndex, i);
-      renderQueue.push(markSwap(arr, minIndex, i));
-      renderQueue.push(markIncomplete(arr, minIndex, i));
+    for (let j = orderedIndex; j > 0; j--) {
+      renderQueue.push(markSwap(arr, j));
+      renderQueue.push(markCompare(arr, j - 1));
+      if (arr[j].value >= arr[j - 1].value) {
+        renderQueue.push(markComplete(arr, j, j - 1));
+        break;
+      }
+      swapArr(arr, j, j - 1);
+      renderQueue.push(markComplete(arr, j));
     }
-    renderQueue.push(markComplete(arr, i));
+    renderQueue.push(markComplete(arr, 0));
   }
 
   return renderQueue;
