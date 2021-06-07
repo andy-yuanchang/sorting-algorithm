@@ -105,7 +105,34 @@ const insertionSort = (array) => {
 };
 
 const quickSort = (array) => {
+  const arr = array.slice();
+  const renderQueue = [];
+  const partition = (data, left, right) => {
+    let i = left - 1;
+    renderQueue.push(markCompare(data, right));
+    for (let j = left; j < right; j++) {
+      if (data[j].value < data[right].value) {
+        i++;
+        swapArr(data, i, j);
+        renderQueue.push(markSwap(data, i, j));
+        renderQueue.push(markIncomplete(data, i, j));
+      }
+    }
+    renderQueue.push(markSwap(data, i + 1));
+    swapArr(data, i + 1, right);
+    renderQueue.push(markIncomplete(data, i + 1, right));
+    return i + 1;
+  };
+  const quick_sort = (data, left, right) => {
+    if (left < right) {
+      const pivot = partition(data, left, right);
+      quick_sort(data, left, pivot - 1);
+      quick_sort(data, pivot + 1, right);
+    }
+  };
+  quick_sort(arr, 0, arr.length - 1);
 
+  return renderQueue;
 };
 
 const mergeSort = (array) => {

@@ -35,13 +35,14 @@ const clearAllTimeouts = () => {
 
 const Sort = (props) => {
   const {
-    length, algorithmType, isProcessing, setIsProcessing, speed,
+    length, algorithmType, isProcessing, speed,
   } = props;
 
   const [array, setArray] = useState(() => {
     const arr = generateUnorderedArray(length);
     return arr;
   });
+  const [steps, setSteps] = useState(0);
 
   useEffect(() => {
     setArray((prevArr) => {
@@ -52,15 +53,29 @@ const Sort = (props) => {
 
   useEffect(() => {
     clearAllTimeouts();
+    resetArray();
+    setSteps(0);
   }, [speed, algorithmType, length]);
 
   useEffect(() => {
     clearAllTimeouts();
+    resetArray();
+    setSteps(0);
     if (isProcessing) {
       renderQueue = sortingBy(algorithmType, array);
       renderSortingEffect();
     }
   }, [isProcessing]);
+
+  const resetArray = () => {
+    setArray((prevArr) => {
+      const arr = prevArr.map((v) => ({
+        value: v.value,
+        status: SORT_STATUS.incomplete,
+      }));
+      return arr;
+    });
+  };
 
   const renderSortingEffect = () => {
     for (let i = 0; i < renderQueue.length; i++) {
@@ -72,6 +87,7 @@ const Sort = (props) => {
     setTimeout(() => {
       if (renderQueue[counter]) {
         setArray(renderQueue[counter]);
+        setSteps((preStap) => preStap + 1);
       }
     }, speed * counter);
   };
@@ -81,6 +97,7 @@ const Sort = (props) => {
       <Histogram
         array={array}
       />
+      <span style={{ fontSize: 'large' }}>{`Processed steps: ${steps}`}</span>
     </div>
   );
 };
