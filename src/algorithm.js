@@ -10,7 +10,7 @@ const swapArr = (arr, index1, index2) => {
 };
 
 const mark = (status) => function (arr) {
-  if (arguments.length > 1) {
+  if (arguments.length > 0) {
     for (let i = 1; i < arguments.length; i++) {
       arr[arguments[i]] = {
         ...arr[arguments[i]],
@@ -107,6 +107,7 @@ const insertionSort = (array) => {
 const quickSort = (array) => {
   const arr = array.slice();
   const renderQueue = [];
+
   const partition = (data, left, right) => {
     let i = left - 1;
     renderQueue.push(markCompare(data, right));
@@ -123,6 +124,7 @@ const quickSort = (array) => {
     renderQueue.push(markIncomplete(data, i + 1, right));
     return i + 1;
   };
+
   const quick_sort = (data, left, right) => {
     if (left < right) {
       const pivot = partition(data, left, right);
@@ -130,13 +132,86 @@ const quickSort = (array) => {
       quick_sort(data, pivot + 1, right);
     }
   };
+
   quick_sort(arr, 0, arr.length - 1);
 
   return renderQueue;
 };
 
 const mergeSort = (array) => {
+  const arr = array.slice();
+  const renderQueue = [];
 
+  const merge = (leftArr, rightArr, leftIndex) => {
+    const mergedArr = [];
+    let lIndex = 0;
+    let rIndex = 0;
+    for (let i = 0; i < leftArr.length + rightArr.length; i++) {
+      if (lIndex === leftArr.length) {
+        mergedArr[i] = rightArr[rIndex];
+        const oriIndex = getOriginalIndex(rightArr[rIndex].value);
+        renderQueue.push(markSwap(arr, leftIndex + i, oriIndex));
+        swapArr(arr, leftIndex + i, oriIndex);
+        renderQueue.push(markIncomplete(arr, leftIndex + i, oriIndex));
+        rIndex++;
+      } else if (rIndex === rightArr.length) {
+        mergedArr[i] = leftArr[lIndex];
+        const oriIndex = getOriginalIndex(leftArr[lIndex].value);
+        renderQueue.push(markSwap(arr, leftIndex + i, oriIndex));
+        swapArr(arr, leftIndex + i, oriIndex);
+        renderQueue.push(markIncomplete(arr, leftIndex + i, oriIndex));
+        lIndex++;
+      } else if (leftArr[lIndex].value < rightArr[rIndex].value) {
+        mergedArr[i] = leftArr[lIndex];
+        const oriIndex = getOriginalIndex(leftArr[lIndex].value);
+        renderQueue.push(markSwap(arr, leftIndex + i, oriIndex));
+        swapArr(arr, leftIndex + i, oriIndex);
+        renderQueue.push(markIncomplete(arr, leftIndex + i, oriIndex));
+        lIndex++;
+      } else if (rightArr[rIndex].value < leftArr[lIndex].value) {
+        mergedArr[i] = rightArr[rIndex];
+        const oriIndex = getOriginalIndex(rightArr[rIndex].value);
+        renderQueue.push(markSwap(arr, leftIndex + i, oriIndex));
+        swapArr(arr, leftIndex + i, oriIndex);
+        renderQueue.push(markIncomplete(arr, leftIndex + i, oriIndex));
+        rIndex++;
+      }
+    }
+    return mergedArr;
+  };
+
+  const merge_sort = (data, leftIndex) => {
+    if (data.length > 1) {
+      let leftArr = [];
+      let rightArr = [];
+      const middleIndex = parseInt(data.length / 2);
+
+      const oriIndex = getOriginalIndex(data[middleIndex].value);
+      renderQueue.push(markCompare(arr, oriIndex));
+      renderQueue.push(markIncomplete(arr, oriIndex));
+
+      for (let i = 0; i < middleIndex; i++) {
+        leftArr[i] = data[i];
+      }
+
+      for (let i = middleIndex; i < data.length; i++) {
+        rightArr[i - middleIndex] = data[i];
+      }
+
+      leftArr = merge_sort(leftArr, leftIndex);
+      rightArr = merge_sort(rightArr, leftIndex + middleIndex);
+
+      return merge(leftArr, rightArr, leftIndex);
+    }
+    return data;
+  };
+
+  const getOriginalIndex = (value) => arr.findIndex((x) => x.value === value);
+
+  console.log(arr)
+  const result = merge_sort(arr, 0, arr.length - 1);
+
+  return renderQueue;
 };
 
 const heapSort = (array) => {
