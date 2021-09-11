@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Button.less';
 
 const Button = (props) => {
   const { text, onClick } = props;
@@ -17,7 +18,10 @@ const Button = (props) => {
   return (
     <button type="button" className="button" onClick={handleClick}>
       {text}
-      {/* <div className="overlay" /> */}
+      <span />
+      <span />
+      <span />
+      <span />
     </button>
   );
 };

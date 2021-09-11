@@ -9,6 +9,19 @@
   width: @histogram-width;
   margin-top: 1rem;
   .column {
-    border: 0.01rem solid white;
+    margin: 0 2px;
+    border-radius: 4px;
+    &.incomplete {
+      background: white;
+    }
+    &.swap {
+      background: #b6e5ff;
+    }
+    &.complete {
+      background: #daf2ff;
+    }
+    &.compare {
+      background: #b6e5ff;
+    }
   }
 }

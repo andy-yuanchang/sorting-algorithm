@@ -87,7 +87,7 @@ const Sort = (props) => {
     setTimeout(() => {
       if (renderQueue[counter]) {
         setArray(renderQueue[counter]);
-        setSteps((preStap) => preStap + 1);
+        setSteps((preStep) => preStep + 1);
       }
     }, speed * counter);
   };

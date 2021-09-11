@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Column = (props) => {
-  const { length, width, color } = props;
+  const { length, width, status } = props;
 
   if (length < 0.1) console.log(length);
   const style = {
     height: `${length * 100}%`,
     width: `${width * 100}%`,
-    background: color,
   };
   return (
     <div
-      className="column"
+      className={`column ${status}`}
       length={length}
       style={style}
     />
@@ -22,7 +21,6 @@ const Column = (props) => {
 Column.propTypes = {
   length: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
 };
 
 export default Column;

@@ -128,6 +128,7 @@ const quickSort = (array) => {
   const quick_sort = (data, left, right) => {
     if (left < right) {
       const pivot = partition(data, left, right);
+      console.log(pivot)
       quick_sort(data, left, pivot - 1);
       quick_sort(data, pivot + 1, right);
     }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import './App.less';
 import Button from './Button';
+import InputRangeBar from './InputRangeBar';
 
 import Sort from './Sort';
 
@@ -41,45 +42,35 @@ const App = () => {
     setIsProcessing((preIsProcessing) => !preIsProcessing);
   };
 
+  const renderAlgorithmOptions = () => (
+    Object.keys(SORT_ALGORITHM_LIST).map(algorithmName => (
+      <li
+        className={`option ${algorithm === algorithmName && "selected"}`}
+        onClick={(e) => handleChangeAlgorithm(e, algorithmName)}
+      >
+        {`${algorithmName} sort`}
+        <span />
+        <div className="selected-effect"></div>
+      </li>
+    ))
+  )
+
   return (
     <div id="app">
+      <ul className="options">
+        {renderAlgorithmOptions()}
+      </ul>
+      <div className="array-size">
+        <p>{`Array Size: ${number}`}</p>
+        <input type="range" name="array-size" min="10" max="500" onChange={handleChangeNumber} />
+      </div>
 
-      <div id="options">
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--bubble" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Bubble)} checked={algorithm === SORT_ALGORITHM_LIST.Bubble} />
-          <label htmlFor="checkbox--bubble">Bubble Sort</label>
-        </div>
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--selection" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Selection)} checked={algorithm === SORT_ALGORITHM_LIST.Selection} />
-          <label htmlFor="checkbox--selection">Selection Sort</label>
-        </div>
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--insertion" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Insertion)} checked={algorithm === SORT_ALGORITHM_LIST.Insertion} />
-          <label htmlFor="checkbox--insertion">Insertion Sort</label>
-        </div>
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--quick" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Quick)} checked={algorithm === SORT_ALGORITHM_LIST.Quick} />
-          <label htmlFor="checkbox--quick">Quick Sort</label>
-        </div>
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--merge" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Merge)} checked={algorithm === SORT_ALGORITHM_LIST.Merge} />
-          <label htmlFor="checkbox--merge">Merge Sort</label>
-        </div>
-        <div className="checkbox">
-          <input type="checkbox" id="checkbox--heap" name="selected-algorithm" onChange={(e) => handleChangeAlgorithm(e, SORT_ALGORITHM_LIST.Heap)} checked={algorithm === SORT_ALGORITHM_LIST.Heap} />
-          <label htmlFor="checkbox--heap">Heap Sort</label>
-        </div>
+      <div className="render-speed">
+        <p>{`Rendering Speed: ${speed}`}</p>
+        <input type="range" name="render-speed" min="1" max={MAX_SPEED} onChange={handleChangeSpeed} />
+      </div>
 
-        <div className="array-size">
-          <p>Array Size</p>
-          <input type="range" name="array-size" min="10" max="500" onChange={handleChangeNumber} />
-        </div>
-
-        <div className="render-speed">
-          <p>Rendering Speed</p>
-          <input type="range" name="render-speed" min="1" max={MAX_SPEED} onChange={handleChangeSpeed} />
-        </div>
-
+      <div className="trigger-button">
         <Button text={`${isProcessing ? 'stop' : 'start'}`} onClick={handleClick} />
       </div>
 

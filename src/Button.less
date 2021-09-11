@@ -1,22 +1,63 @@
-@button-color: rgb(46, 46, 148);
-
 .button {
     position: relative;
     font-size: 2rem;
-    color: white;
-    border-radius: 4px;
     width: 10rem;
-    background: @button-color;
     text-align: center;
-    border: 1px solid @button-color;
-    // display: inline-block;
-    &:hover {
-        // opacity: 0.9;
-        box-shadow: 0px 0px 5px black;
-        cursor: pointer;
+    border: none;
+    background: none;
+    overflow: hidden;
+    letter-spacing: 4px;
+    span {
+        position: absolute;
+        background: linear-gradient(#141e30, #243b55);
+        &:nth-child(1) {
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 2px;
+        }
+        &:nth-child(2) {
+            right: 0;
+            top: -100%;
+            width: 2px;
+            height: 100%;
+        }
+        &:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+        }
+        &:nth-child(4) {
+            left: 0;
+            bottom: -100%;
+            width: 2px;
+            height: 100%;
+        }
     }
-    &:active {
-        transform: scale(0.9);
-        transition: transform 300ms ease-out;
+    &:hover {
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        background: #141e30;
+        box-shadow: 0px 0px 10px #243b55, 0px 0px 40px #243b55, 0px 0px 80px #243b55;
+        transition-delay: 1s;
+        span {
+            transition: 0.25s;
+            &:nth-child(1) {
+                left: 100%;
+            }
+            &:nth-child(2) {
+                top: 100%;
+                transition-delay: 0.25s;
+            }
+            &:nth-child(3) {
+                right: 100%;
+                transition-delay: 0.5s;
+            }
+            &:nth-child(4) {
+                bottom: 100%;
+                transition-delay: 0.75s;
+            }
+        }
     }
 }
