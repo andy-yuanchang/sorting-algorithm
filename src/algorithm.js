@@ -119,15 +119,9 @@ const quickSort = (array) => {
         renderQueue.push(markIncomplete(data, i, j));
       }
     }
-    renderQueue.push(markSwap(data, i + 1));
+    renderQueue.push(markSwap(data, i + 1, right));
     swapArr(data, i + 1, right);
     renderQueue.push(markIncomplete(data, i + 1, right));
-
-    if (left >= i || right <= i) {
-      for (let i = left; i < right; i++) {
-        renderQueue.push(markComplete(data, i));
-      }
-    }
 
     return i + 1;
   };
@@ -137,6 +131,17 @@ const quickSort = (array) => {
       const pivot = partition(data, left, right);
       quick_sort(data, left, pivot - 1);
       quick_sort(data, pivot + 1, right);
+    } else {
+      let inorderIndex = 0;
+      for (let i = 0; i <= right; i++) {
+        if (data[i].status !== SORT_STATUS.complete) {
+          inorderIndex = i;
+          break;
+        }
+      }
+      for (let i = inorderIndex; i <= right; i++) {
+        renderQueue.push(markComplete(data, i));
+      }
     }
   };
 
@@ -153,6 +158,7 @@ const mergeSort = (array) => {
     const mergedArr = [];
     let lIndex = 0;
     let rIndex = 0;
+    const isLastMerged = leftArr.length + rightArr.length === arr.length;
     for (let i = 0; i < leftArr.length + rightArr.length; i++) {
       if (lIndex === leftArr.length) {
         mergedArr[i] = rightArr[rIndex];
@@ -182,6 +188,10 @@ const mergeSort = (array) => {
         swapArr(arr, leftIndex + i, oriIndex);
         renderQueue.push(markIncomplete(arr, leftIndex + i, oriIndex));
         rIndex++;
+      }
+
+      if (isLastMerged) {
+        renderQueue.push(markComplete(arr, leftIndex + i));
       }
     }
     return mergedArr;
@@ -215,8 +225,7 @@ const mergeSort = (array) => {
 
   const getOriginalIndex = (value) => arr.findIndex((x) => x.value === value);
 
-  console.log(arr)
-  const result = merge_sort(arr, 0, arr.length - 1);
+  merge_sort(arr, 0, arr.length - 1);
 
   return renderQueue;
 };
