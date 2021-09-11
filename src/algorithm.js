@@ -122,13 +122,19 @@ const quickSort = (array) => {
     renderQueue.push(markSwap(data, i + 1));
     swapArr(data, i + 1, right);
     renderQueue.push(markIncomplete(data, i + 1, right));
+
+    if (left >= i || right <= i) {
+      for (let i = left; i < right; i++) {
+        renderQueue.push(markComplete(data, i));
+      }
+    }
+
     return i + 1;
   };
 
   const quick_sort = (data, left, right) => {
     if (left < right) {
       const pivot = partition(data, left, right);
-      console.log(pivot)
       quick_sort(data, left, pivot - 1);
       quick_sort(data, pivot + 1, right);
     }
