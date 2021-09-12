@@ -231,7 +231,78 @@ const mergeSort = (array) => {
 };
 
 const heapSort = (array) => {
+  const arr = array.slice();
+  const renderQueue = [];
 
+  const getMaximumValueIndex = (index, ignoredIndex = Number.MAX_VALUE) => {
+    const leftChildIndex = 2 * index + 1;
+    const rightChildIndex = 2 * index + 2;
+    const leftChildValue = leftChildIndex < arr.length && leftChildIndex < ignoredIndex ? 
+      arr[leftChildIndex].value : Number.NEGATIVE_INFINITY;
+    const rightChildValue = rightChildIndex < arr.length && rightChildIndex < ignoredIndex ? 
+      arr[rightChildIndex].value : Number.NEGATIVE_INFINITY;
+
+    if (leftChildValue !== Number.NEGATIVE_INFINITY && rightChildValue !== Number.NEGATIVE_INFINITY) {
+      renderQueue.push(markCompare(arr, index, leftChildIndex, rightChildIndex));
+      renderQueue.push(markIncomplete(arr, index, leftChildIndex, rightChildIndex));
+    } else if (leftChildValue !== Number.NEGATIVE_INFINITY) {
+      renderQueue.push(markCompare(arr, index, leftChildIndex));
+      renderQueue.push(markIncomplete(arr, index, leftChildIndex));
+    } else if (rightChildValue !== Number.NEGATIVE_INFINITY) {
+      renderQueue.push(markCompare(arr, index, rightChildIndex));
+      renderQueue.push(markIncomplete(arr, index, rightChildIndex));
+    } else {
+      renderQueue.push(markCompare(arr, index));
+      renderQueue.push(markIncomplete(arr, index));
+    }
+
+    const maxValue = Math.max(arr[index].value, leftChildValue, rightChildValue);
+    if (maxValue === arr[index].value) {
+      return index;
+    } else if (maxValue === leftChildValue) {
+      return leftChildIndex;
+    } else if (maxValue === rightChildValue) {
+      return rightChildIndex;
+    }
+  }
+
+  const heapify = (index) => {
+    let maxIndex = getMaximumValueIndex(index);
+    while(maxIndex !== index) {
+      swapArr(arr, index, maxIndex);
+      renderQueue.push(markSwap(arr, index, maxIndex));
+      renderQueue.push(markIncomplete(arr, index, maxIndex));
+      index = maxIndex;
+      maxIndex = getMaximumValueIndex(index);
+    }
+  }
+
+  const heapSort = (index) => {
+    swapArr(arr, 0, index);
+    renderQueue.push(markSwap(arr, 0, index));
+    renderQueue.push(markComplete(arr, index));
+    let rootIndex = 0;
+    let maxIndex = getMaximumValueIndex(rootIndex, index);
+    while(maxIndex !== rootIndex) {
+      swapArr(arr, rootIndex, maxIndex);
+      renderQueue.push(markSwap(arr, rootIndex, maxIndex));
+      renderQueue.push(markIncomplete(arr, rootIndex, maxIndex));
+      rootIndex = maxIndex;
+      maxIndex = getMaximumValueIndex(rootIndex, index);
+    }
+  }
+
+  const startIndex = Math.floor((arr.length - 1) / 2);
+  for (let i = startIndex; i >= 0; i--) {
+    heapify(i);
+  }
+  
+  for (let i = arr.length - 1; i >= 0; i--) {
+    heapSort(i)
+  }
+  renderQueue.push(markComplete(arr, 0));
+
+  return renderQueue;
 };
 /**
  *
