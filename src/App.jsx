@@ -60,18 +60,31 @@ const App = () => {
       <ul className="options">
         {renderAlgorithmOptions()}
       </ul>
-      <div className="array-size">
-        <p>{`Array Size: ${number}`}</p>
-        <input type="range" name="array-size" min="10" max="500" onChange={handleChangeNumber} />
-      </div>
 
-      <div className="render-speed">
-        <p>{`Rendering Speed: ${speed}`}</p>
-        <input type="range" name="render-speed" min="1" max={MAX_SPEED} onChange={handleChangeSpeed} />
-      </div>
+      <div className="settings">
+        <div className="array-size">
+          <p>{`Array Size: ${number}`}</p>
+          <InputRangeBar
+            min={10}
+            max={500} 
+            onChange={handleChangeNumber}
+            value={number}
+          />
+        </div>
 
-      <div className="trigger-button">
-        <Button text={`${isProcessing ? 'stop' : 'start'}`} onClick={handleClick} />
+        <div className="render-speed">
+          <p>{`Rendering Speed: ${MAX_SPEED - speed + 1}`}</p>
+          <InputRangeBar
+            min={1}
+            max={MAX_SPEED} 
+            onChange={handleChangeSpeed}
+            value={MAX_SPEED - speed + 1}
+          />
+        </div>
+
+        <div className="trigger-button">
+          <Button text={`${isProcessing ? 'stop' : 'start'}`} onClick={handleClick} />
+        </div>
       </div>
 
       <Sort
