@@ -1,12 +1,35 @@
 .input-range-bar {
-  width: 300px;
-  height: 2rem;
+  width: 200px;
+  height: 20px;
+  outline: none;
+  // background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 50%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5) 50%);;
+  appearance: none;
+  border-radius: 2rem;
+  box-shadow: 0px 0px 10px #EEEEEE, 0px 0px 40px #EEEEEE, 0px 0px 80px #EEEEEE;
   position: relative;
-  border-radius: 4px;
-  background: white;
-  input {
-    position: absolute;
-    width: 100%;
+  &::-webkit-slider-thumb {
+      appearance: none;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
   }
-  background: linear-gradient(90deg, #141e30, #243b55);
+  &::before, &::after {
+      position: absolute;
+      bottom: -150%;
+      pointer-events: none;
+      transition:.2s;
+      font-size: large;
+      color: rgba(255, 255, 255, 0.8);
+  }
+  &::before {
+      content: attr(data-min-value);
+      left: 0;
+  }
+  &::after {
+      content: attr(data-max-value);
+      right: 0;
+  }
 }
