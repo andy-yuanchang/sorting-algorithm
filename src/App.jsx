@@ -22,6 +22,7 @@ const App = () => {
   const [speed, setSpeed] = useState(25);
   const [algorithm, setAlgorithm] = useState(SORT_ALGORITHM_LIST.Bubble);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [shuffling, setShuffling] = useState(false);
 
   const handleChangeNumber = (e) => {
     setNumber(parseInt(e.target.value));
@@ -41,6 +42,10 @@ const App = () => {
   const handleClick = () => {
     setIsProcessing((preIsProcessing) => !preIsProcessing);
   };
+
+  const handleShuffling = () => {
+    setShuffling(!shuffling);
+  }
 
   const renderAlgorithmOptions = () => (
     Object.keys(SORT_ALGORITHM_LIST).map(algorithmName => (
@@ -85,6 +90,11 @@ const App = () => {
         <div className="trigger-button">
           <Button text={`${isProcessing ? 'stop' : 'start'}`} onClick={handleClick} />
         </div>
+
+        <div className="trigger-button">
+          <Button text={"Shuffling"} onClick={handleShuffling} />
+        </div>
+
       </div>
 
       <Sort
@@ -93,6 +103,7 @@ const App = () => {
         algorithmType={algorithm}
         isProcessing={isProcessing}
         setIsProcessing={setIsProcessing}
+        shuffling={shuffling}
       />
     </div>
   );

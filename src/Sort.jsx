@@ -35,7 +35,7 @@ const clearAllTimeouts = () => {
 
 const Sort = (props) => {
   const {
-    length, algorithmType, isProcessing, speed,
+    length, algorithmType, isProcessing, speed, shuffling
   } = props;
 
   const [array, setArray] = useState(() => {
@@ -43,6 +43,13 @@ const Sort = (props) => {
     return arr;
   });
   const [steps, setSteps] = useState(0);
+
+  useEffect(() => {
+    setArray((prevArr) => {
+      const arr = generateUnorderedArray(length);
+      return arr;
+    });
+  }, [shuffling])
 
   useEffect(() => {
     setArray((prevArr) => {
