@@ -10,7 +10,7 @@ There are several algorithms offered for chose, the algorithms including:
 5. `merge sort`
 6. `heap sort`
 
-[A snapshot of current project](./public/images/demo1.png)
+![A snapshot of current project](./public/images/demo1.png)
 
 [DEMO](https://sort-algorithm-70e2a.firebaseapp.com/)
 
